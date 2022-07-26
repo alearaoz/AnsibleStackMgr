@@ -59,7 +59,7 @@
   lineinfile:
     path: /etc/php-fpm.d/www.conf
     regexp: "listen ="
-    line: "listen = /run/php-fpm/www.sock"
+    line: "listen = /var/run/php-fpm/php-fpm.sock"
     state: present
   notify: restart php
 
@@ -68,7 +68,7 @@
     path: /etc/php-fpm.d/www.conf
     regexp: "listen.owner ="
     line: "listen.owner = nginx"
-    insertafter: "listen = /run/php-fpm/www.sock"
+    insertafter: "listen = /var/run/php-fpm/php-fpm.sock"
     state: present
   notify: restart php
 
@@ -81,7 +81,7 @@
     state: present
   notify: restart php
 
-- name: Configurar mascara de permisos de los archivos del socker
+- name: Configurar mascara de permisos de los archivos del socket
   lineinfile:
     path: /etc/php-fpm.d/www.conf
     regexp: "listen.mode ="
