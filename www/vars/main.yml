@@ -1,0 +1,5 @@
+---
+# vars file for www
+#
+php_version: 7.4.30
+domain_name: localhost

@@ -1,7 +1,7 @@
 ---
 # tasks file for www
 #
-- name: Instalacion nginx
+- name: Instalacion NGINX
   yum:
     name: ['epel-release', 'nginx']
     state: latest
@@ -40,3 +40,76 @@
   register: php_installed
   command: php -v
   ignore_errors: true
+
+- name: Cambio de ownership del usuario php a nginx
+  lineinfile:
+    path: /etc/php-fpm.d/www.conf
+    regexp: '^{{ item.apache }}'
+    line: '{{ item.nginx }}'
+  loop:
+  - user:
+    apache: "user ="
+    nginx: "user = nginx"
+  - group: 
+    apache: "group ="
+    nginx: "group = nginx"
+  notify: restart php
+
+- name: Habilitacion del unix socket
+  lineinfile:
+    path: /etc/php-fpm.d/www.conf
+    regexp: "listen ="
+    line: "listen = /run/php-fpm/www.sock"
+    state: present
+  notify: restart php
+
+- name: Configurar el owner de los archivos del socker
+  lineinfile:
+    path: /etc/php-fpm.d/www.conf
+    regexp: "listen.owner ="
+    line: "listen.owner = nginx"
+    insertafter: "listen = /run/php-fpm/www.sock"
+    state: present
+  notify: restart php
+
+- name: Configurar el grupo de los archivos del socker
+  lineinfile:
+    path: /etc/php-fpm.d/www.conf
+    regexp: "listen.group ="
+    line: "listen.group = nginx"
+    insertafter: "listen.owner = nginx"
+    state: present
+  notify: restart php
+
+- name: Configurar mascara de permisos de los archivos del socker
+  lineinfile:
+    path: /etc/php-fpm.d/www.conf
+    regexp: "listen.mode ="
+    line: "listen.mode = 0660"
+    insertafter: "listen.group = nginx"
+    state: present
+  notify: restart php
+
+- name: Creacion de Virtual Host NGINX
+  template:
+    src: vhost.j2
+    dest: /etc/nginx/conf.d/default.conf
+  notify: restart nginx
+
+- name: Crear php test page
+  copy:
+    dest: /usr/share/nginx/html/info.php
+    content: "<?php phpinfo(); ?>"
+    owner: nginx
+    group: nginx
+  notify:
+    - restart nginx
+    - restart php
+
+- name: Cambair ownership del directorio
+  file:
+    path: /usr/share/nginx/html
+    state: directory
+    recurse: yes
+    owner: nginx
+    group: nginx
