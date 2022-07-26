@@ -106,7 +106,7 @@
     - restart nginx
     - restart php
 
-- name: Cambair ownership del directorio
+- name: Cambiar ownership del directorio
   file:
     path: /usr/share/nginx/html
     state: directory
