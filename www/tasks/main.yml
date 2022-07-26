@@ -41,6 +41,12 @@
   command: php -v
   ignore_errors: true
 
+- name: Inicio y activacion de php-fpm durante el boot del servidor
+  systemd:
+    name: php-fpm
+    state: started
+    enabled: yes
+
 - name: Cambio de ownership del usuario php a nginx
   lineinfile:
     path: /etc/php-fpm.d/www.conf
