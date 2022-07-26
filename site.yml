@@ -1,0 +1,8 @@
+---
+- hosts: www
+  remote_user: confmgr
+  become: true
+
+  roles:
+    - www
+    - db

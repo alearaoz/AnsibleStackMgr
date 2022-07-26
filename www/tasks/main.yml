@@ -1,0 +1,42 @@
+---
+# tasks file for www
+#
+- name: Instalacion nginx
+  yum:
+    name: ['epel-release', 'nginx']
+    state: latest
+  ignore_errors: true
+
+- name: Inicio y activacion de nginx durante el boot del servidor
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Asignacion de regla para permitir el trafico en el puerto 80/tcp y 443/tcp
+  firewalld:
+    zone: public
+    service: "{{ item }}"
+    immediate: true
+    permanent: yes
+    state: enabled
+  with_items:
+    - http
+    - https
+  notify: restart firewalld
+
+- name: Instalacion del repositorio remi
+  yum:
+    name: http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+    state: latest
+
+- name: Instalacion de PHP
+  yum:
+    name:  ['php', 'php-mysqlnd', 'php-fpm']
+    state: latest
+    enablerepo: "remi-php74"
+
+- name: Verificacion de la version de PHP instalada
+  register: php_installed
+  command: php -v
+  ignore_errors: true

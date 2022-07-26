@@ -1,0 +1,22 @@
+---
+# tasks file for db
+#
+- name: Instalacion MariaDB
+  yum:
+    name: ['mariadb-server', 'mariadb', 'MySQL-python']
+    state: latest
+  ignore_errors: true
+
+- name: Inicio y activacion de MariaDB durante el boot del servidor
+  systemd:
+    name: mariadb
+    state: started
+    enabled: yes
+
+- name: Cambio de password de root en MariaDB
+  mysql_user:
+    name: root
+    password: '{{ db_rootpw }}'
+    host_all: yes
+  notify: restart mariadb
+  

@@ -1,0 +1,21 @@
+---
+# handlers file for www
+#
+- name: Reinicio del servicio firewalld
+  systemd:
+    name: firewalld
+    state: restarted
+  listen: restart firewalld
+
+- name: Reinicio del servicio nginx
+  systemd:
+    name: nginx
+    state: restarted
+    listen: restart nginx
+  
+
+- name: Reinicio del servicio php
+  systemd:
+    name: php-fpm
+    state: restarted
+    listen: restart php
