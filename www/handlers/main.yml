@@ -11,11 +11,10 @@
   systemd:
     name: nginx
     state: restarted
-    listen: restart nginx
-  
+  listen: restart nginx
 
 - name: Reinicio del servicio php
   systemd:
     name: php-fpm
     state: restarted
-    listen: restart php
+  listen: restart php
