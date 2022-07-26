@@ -58,35 +58,33 @@
 - name: Habilitacion del unix socket
   lineinfile:
     path: /etc/php-fpm.d/www.conf
-    regexp: "listen ="
+    regexp: "^listen ="
     line: "listen = /var/run/php-fpm/php-fpm.sock"
     state: present
   notify: restart php
 
-- name: Configurar el owner de los archivos del socker
+- name: Configurar el owner de los archivos del socket
   lineinfile:
     path: /etc/php-fpm.d/www.conf
-    regexp: "listen.owner ="
+    regexp: "^listen.owner ="
     line: "listen.owner = nginx"
     insertafter: "listen = /var/run/php-fpm/php-fpm.sock"
     state: present
   notify: restart php
 
-- name: Configurar el grupo de los archivos del socker
+- name: Configurar el grupo de los archivos del socket
   lineinfile:
     path: /etc/php-fpm.d/www.conf
-    regexp: "listen.group ="
+    regexp: "^listen.group ="
     line: "listen.group = nginx"
-    insertafter: "listen.owner = nginx"
     state: present
   notify: restart php
 
 - name: Configurar mascara de permisos de los archivos del socket
   lineinfile:
     path: /etc/php-fpm.d/www.conf
-    regexp: "listen.mode ="
+    regexp: "^listen.mode ="
     line: "listen.mode = 0660"
-    insertafter: "listen.group = nginx"
     state: present
   notify: restart php
 
