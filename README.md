@@ -10,27 +10,66 @@ El siguiente proyecto fue creado siguiendo los pasos de instalacion de un servid
 
 El proyecto se creo utilizando la siguiente estructura:
 
--
+```
+AnsibleStackMgr
+|
+│   README.md
+│   hosts
+|   site.yml
+│
+└───db
+│   │
+│   └───defaults
+│   |   |
+|   |   └── main.yml
+│   │
+│   └───handlers
+|   |   |
+|   |   └── main.yml
+|   |
+|   └───tasks
+|       |
+|       └── main.yml
+│
+└───www
+    │
+    └───handlers
+    |   |
+    |   └── main.yml
+    |
+    └───tasks
+    |   |
+    |   └── main.yml
+    │
+    └───templates
+    |   |
+    |   └── vhost.j2
+    │
+    └───vars
+        |
+        └── main.yml
+```
 
 Donde:
 
-**db:** contiene la estructura de las tareas y controladores para la BD.
+    **db:** contiene la estructura de las tareas y controladores para la BD.
 
-**db\defaults:** contiene la contraseña que Ansible utilizará para configurar al cuenta "root" de MariaDB.
+    **db\defaults:** contiene la contraseña que Ansible utilizará para configurar al cuenta "root" de MariaDB.
 
-**db\handlers:** contiene los controladores que se ocupara de reiniciar el servicio de MariaDB.
+    **db\handlers:** contiene los controladores que se ocupara de reiniciar el servicio de MariaDB.
 
-**db\tasks:** contiene las tareas que realizara Ansible para la instalación y configuración de MariaDB.
+    **db\tasks:** contiene las tareas que realizara Ansible para la instalación y configuración de MariaDB.
 
-**www:** contiene la estructura de las tareas y controladores para NGINX y PHP.
+    **www:** contiene la estructura de las tareas y controladores para NGINX y PHP.
 
-**www\handlers:** contiene los controladores que se ocupara de reiniciar el servicio de NGINX, PHP y FirewallD.
+    **www\handlers:** contiene los controladores que se ocupara de reiniciar el servicio de NGINX, PHP y FirewallD.
 
-**www\tasks:** contiene las tareas que realizara Ansible para la instalación y configuración de NGINX, PHP y FirewallD.
+    **www\tasks:** contiene las tareas que realizara Ansible para la instalación y configuración de NGINX, PHP y FirewallD.
 
-**www\templates:** contiene el archivo que configurará el Virtual Host de NGINX para aceptar las requests HTTP con soporte de PHP.
+    **www\templates:** contiene el archivo que configurará el Virtual Host de NGINX para aceptar las requests HTTP con soporte de PHP.
 
-**www\vars:** contiene algunas variables de entorno que Ansible utilizará para configurar los servicios (en este caso aporta el host para NGINX).
+    **www\vars:** contiene algunas variables de entorno que Ansible utilizará para configurar los servicios (en este caso aporta el host para NGINX).
+
 
 ## Requisitos para la utilización del proyecto
 
@@ -101,19 +140,19 @@ Los requisitos para la utilización del proyecto son:
 ```
 $ ansible-playbook-3 -i hosts site.yml
 
-PLAY [www] *********************************************************************************************************************
+PLAY [www] *****************************************************************************************************************
 
-TASK [Gathering Facts] *********************************************************************************************************
+TASK [Gathering Facts] *****************************************************************************************************
 The authenticity of host '127.0.0.1 (127.0.0.1)' can't be established.
 ECDSA key fingerprint is SHA256:ZywNGMs2dvsrBHiDTOm3/bdsQ9TJ4Wy7lcBfvPS/N7k.
 ECDSA key fingerprint is MD5:6f:73:45:9b:5b:f1:34:0a:f9:82:42:d5:7e:7c:0a:18.
 Are you sure you want to continue connecting (yes/no)? yes
 ok: [localhost]
 
-TASK [www : Instalacion NGINX] *************************************************************************************************
+TASK [www : Instalacion NGINX] *********************************************************************************************
 changed: [localhost]
 
-TASK [www : Inicio y activacion de nginx durante el boot del servidor] *********************************************************
+TASK [www : Inicio y activacion de nginx durante el boot del servidor] *****************************************************
 changed: [localhost]
 
 ...
@@ -125,5 +164,3 @@ changed: [localhost]
 
 > En caso de dudas respecto del procedimeinto y/o construccion del proyecto, por favor contactarme en: <ale.araoz@gmail.com>
 
-
- ---== FIN DEL DOCUMENTO ==---
