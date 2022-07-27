@@ -1,3 +1,4 @@
 ---
 # defaults file for db
-db_rootpw: doNot.Us3-me!
+#
+db_rootpw: doNot.Us3

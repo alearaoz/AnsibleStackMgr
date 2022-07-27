@@ -83,6 +83,7 @@
     path: /etc/php-fpm.d/www.conf
     regexp: "^listen.group ="
     line: "listen.group = nginx"
+    insertafter: "listen.owner = nginx"
     state: present
   notify: restart php
 
@@ -91,6 +92,7 @@
     path: /etc/php-fpm.d/www.conf
     regexp: "^listen.mode ="
     line: "listen.mode = 0660"
+    insertafter: "listen.group = nginx"
     state: present
   notify: restart php
 
@@ -117,3 +119,12 @@
     recurse: yes
     owner: nginx
     group: nginx
+
+- name: Crea el directorio php-fpm
+  file:
+    path: /var/run/php-fpm
+    state: directory
+    owner: nginx
+    group: nginx
+    mode: 0755
+    recurse: yes
