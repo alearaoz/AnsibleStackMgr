@@ -1,4 +1,5 @@
 # AnsibleStackMgr
+----
 ## Stack Configuration with Ansible using Linux-NGINX-PHP
 
 
@@ -7,10 +8,49 @@
 El siguiente proyecto fue creado siguiendo los pasos de instalacion de un servidor Web, utilizando NGINX como servidor web, PHP como interprete de codigo y MariaDB como base de datos de acuerdo al procedimiento de [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-centos-7).
 
 
-
 El proyecto se creo utilizando la siguiente estructura:
 
--
+
+```
+AnsibleStackMgr
+|
+│   README.md
+│   hosts
+|   site.yml
+│
+└───db
+│   │
+│   └───defaults
+│   |   |
+|   |   └── main.yml
+│   │
+│   └───handlers
+|   |   |
+|   |   └── main.yml
+|   |
+|   └───tasks
+|       |
+|       └── main.yml
+│
+└───www
+    │
+    └───handlers
+    |   |
+    |   └── main.yml
+    |
+    └───tasks
+    |   |
+    |   └── main.yml
+    │
+    └───templates
+    |   |
+    |   └── vhost.j2
+    │
+    └───vars
+        |
+        └── main.yml
+```
+
 
 Donde:
 
@@ -32,6 +72,10 @@ Donde:
 
 **www\vars:** contiene algunas variables de entorno que Ansible utilizará para configurar los servicios (en este caso aporta el host para NGINX).
 
+
+
+
+----
 ## Requisitos para la utilización del proyecto
 
 Los requisitos para la utilización del proyecto son:
@@ -67,19 +111,19 @@ Los requisitos para la utilización del proyecto son:
 
 - Iniciar sesion con el usuario creado y crear las llaves SSH para el usuario "confmgr" con el siguiente comando:
 
-`$ ssh-keygen -t rsa -b 4096`
+  `$ ssh-keygen -t rsa -b 4096`
 
 - Instalar la llave publica para poder ser utilizada en el servidor donde se esta realizando la actividad:
 
   `$ cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys`
 
-> Para comprobar la correcta configuración de SSH, es posible conectarse utilizando el siguiente comando:
->
->  `$ ssh confmg@localhost`
->
-> Aceptar la fingerprint del servidor y se iniciara la sesion mostrando el prompt en el mismo servidor
->
->  `[confmgr@servodor ~]$ _`
+  > Para comprobar la correcta configuración de SSH, es posible conectarse utilizando el siguiente comando:
+  >
+  >  `$ ssh confmg@localhost`
+  >
+  > Aceptar la fingerprint del servidor y se iniciara la sesion mostrando el prompt en el mismo servidor
+  >
+  >  `[confmgr@servodor ~]$ _`
 
 - Clonar el proyecto con el siguiente comando:
 
@@ -98,32 +142,30 @@ Los requisitos para la utilización del proyecto son:
 
   Una vez iniciado el proceso, se mostrara el proceso en pantalla.
 
-```
-$ ansible-playbook-3 -i hosts site.yml
-
-PLAY [www] *********************************************************************************************************************
-
-TASK [Gathering Facts] *********************************************************************************************************
-The authenticity of host '127.0.0.1 (127.0.0.1)' can't be established.
-ECDSA key fingerprint is SHA256:ZywNGMs2dvsrBHiDTOm3/bdsQ9TJ4Wy7lcBfvPS/N7k.
-ECDSA key fingerprint is MD5:6f:73:45:9b:5b:f1:34:0a:f9:82:42:d5:7e:7c:0a:18.
-Are you sure you want to continue connecting (yes/no)? yes
-ok: [localhost]
-
-TASK [www : Instalacion NGINX] *************************************************************************************************
-changed: [localhost]
-
-TASK [www : Inicio y activacion de nginx durante el boot del servidor] *********************************************************
-changed: [localhost]
-
-...
-...
-...
-```
+  ```
+  $ ansible-playbook-3 -i hosts site.yml
+  
+  PLAY [www] *****************************************************************************************************************
+  
+  TASK [Gathering Facts] *****************************************************************************************************
+  The authenticity of host '127.0.0.1 (127.0.0.1)' can't be established.
+  ECDSA key fingerprint is SHA256:ZywNGMs2dvsrBHiDTOm3/bdsQ9TJ4Wy7lcBfvPS/N7k.
+  ECDSA key fingerprint is MD5:6f:73:45:9b:5b:f1:34:0a:f9:82:42:d5:7e:7c:0a:18.
+  Are you sure you want to continue connecting (yes/no)? yes
+  ok: [localhost]
+  
+  TASK [www : Instalacion NGINX] *********************************************************************************************
+  changed: [localhost]
+  
+  TASK [www : Inicio y activacion de nginx durante el boot del servidor] *****************************************************
+  changed: [localhost]
+  
+  ...
+  ...
+  ...
+  ```
 
 ## Contacto
 
 > En caso de dudas respecto del procedimeinto y/o construccion del proyecto, por favor contactarme en: <ale.araoz@gmail.com>
 
-
- ---== FIN DEL DOCUMENTO ==---
