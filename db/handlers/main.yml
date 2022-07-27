@@ -1,7 +1,7 @@
 ---
 # handlers file for db
 #
-- name: Restart MariaDB
+- name: Reinicio de MariaDB
   systemd:
     name: mariadb
     state: restarted
